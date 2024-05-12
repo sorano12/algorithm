@@ -1,6 +1,6 @@
 #include<iostream>
 #include<atomic>
-#include<mingw.thread.h>
+#include<thread>
 
 int a=0;
 

@@ -1,0 +1,13 @@
+1，读取记录加S锁
+
+select ... lock in share mode
+
+2，读取记录加X锁
+
+selcet ... for update
+
+3，delete可以视作对删除位置获取X锁的锁定读
+
+4，update分情况，不改主键且存储空间不变/不改主键但存储空间变化/改主键
+
+5，insert，隐式锁保护
