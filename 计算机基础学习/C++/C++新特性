@@ -1,0 +1,40 @@
+1.auto类型推导，根据赋值符号右边的类型推导出变量的类型
+    常用于lambda表达式和async函数
+
+2，智能指针，主要有shared_ptr和unique_ptr
+
+3，C11提供锁库mutex，里面提供两种锁封装
+    lock_guard和unique_lock，都用RAII包装
+
+4，C11提供线程库thread
+
+5，C11提供条件变量库condition_variable
+
+6，C11提供原子类型，在atomic库，可以无锁的线程安全得保护临界区
+
+7，C11提供右值引用来规范化移动拷贝，同时提供移动语义，完美转发
+
+8，C11提供function和lambda表达式，前者可以封装可调用对象为一个函数，还能配合bind使用
+   后者则作为捕获一定范围变量的匿名函数存在
+   
+9，C17提供file_system，规范化文件操作
+
+10，C11提供chrono库来作为对时间的操作
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

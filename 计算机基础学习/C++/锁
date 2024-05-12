@@ -1,0 +1,57 @@
+1，什么是锁？
+    锁是一种同步工具，用于保护共享资源，防止多个线程同时访问，
+避免数据竞争和不一致
+
+2，有哪些锁？
+    种类上有普通锁，读写锁，递归锁
+    实现上有互斥锁，自旋锁，信号量，条件变量
+
+3，互斥锁如何使用？
+    C11提供std::mutex，统一了各平台锁的使用
+    std::mutex mutex_;
+    mutex_.lock();
+    mutex_.unlock();
+
+    之前则依赖于平台，比如linux上C++依赖pthread.h库，使用pthread_mutex
+
+4，互斥锁有没有非阻塞的api?
+    有的，pthread_mutex_trylock()和try_lock()
+    获取不到锁会立即返回
+
+5，如何更好的管理锁？
+    使用lock_guard和unique_lock
+    
+6，两者的相同点和不同？
+    相同：都使用RAII机试实现，支持自动上锁自动解锁
+    不同：1，unique_lock更灵活，可以在任何时候解锁和锁定
+         2，所有权，unique_lock支持所有权转移
+         3，unique_lock性能略低
+
+7，实现一个lock_guard
+    class lock_guard{
+        explicit lock_guard(std::mutex& m):mutex_(m)
+        {
+            mutex_.lock();
+        }
+        ~lock_guard(){
+            mutex_.unlock();
+        }
+    private:
+        std::mutex mutex_;
+    }
+
+8，为什么会发生死锁？
+    满足以下条件：互斥，持有并等待，不可剥夺，环路等待
+
+9，如何避免死锁？
+    避免循环等待，顺序分配资源
+    使用超时锁
+    使用try_lock
+    锁的粒度尽量小
+    lock_free
+
+10，知道adopt_lock_t/defer_lock_t/try_to_lock_t三类型的用法吗？
+    三者都是空类，表示lock_guard和unique_lock的默认构造操作
+    adopt_lock_t默认互斥量已被锁定，不适用lock加锁
+    defer_lock_t，不在构造函数里调用lock
+    try_to_lock_t，构造函数里使用try_lock上锁
